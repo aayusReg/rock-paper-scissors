@@ -1,6 +1,3 @@
-let humanScore = 0;
-let computerScore = 0;
-
 const getComputerChoice = () => {
   let rand = Math.floor(Math.random() * 3 + 1);
   if (rand === 1) {
@@ -38,28 +35,47 @@ const getHumanChoice = () => {
 function playRound(humanChoice, computerChoice) {
   if (humanChoice === "rock" && computerChoice === "paper") {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-    computerScore++;
+    return 0;
   } else if (humanChoice === "paper" && computerChoice === "scissors") {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-    computerScore++;
+    return 0;
   } else if (humanChoice === "scissors" && computerChoice === "rock") {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-    computerScore++;
+    return 0;
   } else if (humanChoice === "rock" && computerChoice === "scissors") {
     console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    humanScore++;
+    return 1;
   } else if (humanChoice === "paper" && computerChoice === "rock") {
     console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    humanScore++;
+    return 1;
   } else if (humanChoice === "scissors" && computerChoice === "paper") {
     console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    humanScore++;
+    return 1;
   } else {
     console.log("It is a draw");
   }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame() {
+  let humanScore = 0;
+  let computerScore = 0;
+  for (let i = 0; i < 5; i++) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    let result = playRound(humanSelection, computerSelection);
+    if (result === 0) {
+      computerScore++;
+    } else if (result === 1) {
+      humanScore++;
+    }
+  }
+  if (computerScore > humanScore) {
+    console.log(`Computer wins ${computerScore}-${humanScore}`);
+  } else if (computerScore < humanScore) {
+    console.log(`Human wins ${humanScore}-${computerScore}`);
+  } else {
+    console.log("Its a drawwww!!!");
+  }
+}
 
-playRound(humanSelection, computerSelection);
+playGame();
