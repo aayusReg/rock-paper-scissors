@@ -35,22 +35,22 @@ const getHumanChoice = () => {
 function playRound(humanChoice, computerChoice) {
   if (humanChoice === "rock" && computerChoice === "paper") {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-    return 0;
+    return "lose";
   } else if (humanChoice === "paper" && computerChoice === "scissors") {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-    return 0;
+    return "lose";
   } else if (humanChoice === "scissors" && computerChoice === "rock") {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-    return 0;
+    return "lose";
   } else if (humanChoice === "rock" && computerChoice === "scissors") {
     console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    return 1;
+    return "win";
   } else if (humanChoice === "paper" && computerChoice === "rock") {
     console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    return 1;
+    return "win";
   } else if (humanChoice === "scissors" && computerChoice === "paper") {
     console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-    return 1;
+    return "win";
   } else {
     console.log("It is a draw");
   }
@@ -63,9 +63,9 @@ function playGame() {
     const humanSelection = getHumanChoice();
     const computerSelection = getComputerChoice();
     let result = playRound(humanSelection, computerSelection);
-    if (result === 0) {
+    if (result === "lose") {
       computerScore++;
-    } else if (result === 1) {
+    } else if (result === "win") {
       humanScore++;
     }
   }
