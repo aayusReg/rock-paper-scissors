@@ -12,3 +12,24 @@ function getComputerChoice() {
   }
 }
 
+function humanChoiceTypeCheck(userInp) {
+  if (userInp === "rock" || userInp === "paper" || userInp === "scissors") {
+    return true;
+  } else {
+    console.log("please make a valid choice!");
+    return false;
+  }
+}
+
+function getHumanChoice() {
+  let isValid = false;
+  let userInp = null;
+  while (!isValid) {
+    userInp = prompt("Please make your choice: ").toLowerCase();
+    isValid = humanChoiceTypeCheck(userInp);
+  }
+  console.log("Your choice is", userInp);
+}
+
+getComputerChoice();
+getHumanChoice();
