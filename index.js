@@ -1,3 +1,11 @@
+const btns = document.querySelectorAll(".btn");
+const result = document.querySelector(".result");
+const para1 = document.createElement("p");
+const para2 = document.createElement("p");
+const para3 = document.createElement("p");
+let compScore = 0;
+let humanScore = 0;
+
 const getComputerChoice = () => {
   let rand = Math.floor(Math.random() * 3 + 1);
   if (rand === 1) {
@@ -10,26 +18,6 @@ const getComputerChoice = () => {
     console.log("The computer choice is scissors");
     return "scissors";
   }
-};
-
-function humanChoiceTypeCheck(userInp) {
-  if (userInp === "rock" || userInp === "paper" || userInp === "scissors") {
-    return true;
-  } else {
-    console.log("please make a valid choice!");
-    return false;
-  }
-}
-
-const getHumanChoice = () => {
-  let isValid = false;
-  let userInp = null;
-  while (!isValid) {
-    userInp = prompt("Please make your choice: ").toLowerCase();
-    isValid = humanChoiceTypeCheck(userInp);
-  }
-  console.log("Your choice is", userInp);
-  return userInp;
 };
 
 function playRound(humanChoice, computerChoice) {
@@ -55,27 +43,53 @@ function playRound(humanChoice, computerChoice) {
     console.log("It is a draw");
   }
 }
-
-function playGame() {
-  let humanScore = 0;
-  let computerScore = 0;
-  for (let i = 0; i < 5; i++) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    let result = playRound(humanSelection, computerSelection);
-    if (result === "lose") {
-      computerScore++;
-    } else if (result === "win") {
-      humanScore++;
-    }
-  }
-  if (computerScore > humanScore) {
-    console.log(`Computer wins ${computerScore}-${humanScore}`);
-  } else if (computerScore < humanScore) {
-    console.log(`Human wins ${humanScore}-${computerScore}`);
-  } else {
-    console.log("Its a drawwww!!!");
-  }
+function endGame(winner) {
+ const playAgain=confirm(`${winner==='human'?'HUMAN':'COMPUTER'} wins the game. Wanna play again?`)
+ if(playAgain){
+  resetGame()
+ } else{
+  disableBtns()
+ }
+}
+function disableBtns(){
+  btns.forEach((btn)=>btn.disabled=true)
 }
 
-playGame();
+function resetGame() {
+  humanScore = 0;
+  compScore = 0;
+  para3.textContent = "";
+  para2.textContent = "";
+  para1.textContent = "";
+}
+
+btns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    let humanSelection = e.target.innerText.toLowerCase();
+    console.log("The Human Choice is", humanSelection);
+    let compSelection = getComputerChoice();
+    para1.textContent = `Human Choice is ${humanSelection}`;
+    para2.textContent = `Computer Choice is ${compSelection}`;
+
+    let playGame = playRound(humanSelection, compSelection);
+    if (playGame === "win") {
+      humanScore += 1;
+      para3.textContent = `You win ${humanScore} - ${compScore}`;
+    } else if (playGame === "lose") {
+      compScore += 1;
+      para3.textContent = `You lose ${humanScore} - ${compScore}`;
+    } else {
+      para3.textContent = "It's a draw";
+    }
+
+    if (humanScore === 5) {
+      endGame("human");
+    } else if (compScore === 5) {
+      endGame("computer");
+    }
+
+    result.appendChild(para1);
+    result.appendChild(para2);
+    result.appendChild(para3);
+  });
+});
