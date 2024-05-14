@@ -44,15 +44,22 @@ function playRound(humanChoice, computerChoice) {
   }
 }
 function endGame(winner) {
- const playAgain=confirm(`${winner==='human'?'HUMAN':'COMPUTER'} wins the game. Wanna play again?`)
- if(playAgain){
-  resetGame()
- } else{
-  disableBtns()
- }
+  const playAgain = confirm(
+    `${
+      winner === "human" ? "HUMAN" : "COMPUTER"
+    } wins the game. Wanna play again?`
+  );
+  if (playAgain) {
+    resetGame();
+  } else {
+    disableBtns();
+    para3.textContent = "";
+    para2.textContent = "";
+    para1.textContent = "";
+  }
 }
-function disableBtns(){
-  btns.forEach((btn)=>btn.disabled=true)
+function disableBtns() {
+  btns.forEach((btn) => (btn.disabled = true));
 }
 
 function resetGame() {
